@@ -7,6 +7,7 @@ import Navbar from './Navbar'
 import Question from './Question'
 import NewQuestion from './NewQuestion'
 import Leaderboard from './Leaderboard'
+import LoadingBar from 'react-redux-loading'
 
 class App extends Component {
     componentDidMount() {
@@ -16,6 +17,7 @@ class App extends Component {
         return(
             <Router>
                 <Fragment>
+                    <LoadingBar/>
                     <div className='container'>
                         <Navbar/>
                         {this.props.loading === true

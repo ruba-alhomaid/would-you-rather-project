@@ -1,11 +1,18 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import Question from './Question'
+
 
 class Home extends Component {
     render() {
         console.log(this.props.authedUserAnswers)
         return(
             <div>
+                { this.props.questionsIds.map((id) => (
+                            <li key={id}>
+                                <Question id={id}/>
+                            </li>
+                        ))}
                 {/* <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
                         <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Unanswered Questions</a>
@@ -18,7 +25,7 @@ class Home extends Component {
                     <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                         { this.props.unansweredQ.map((question) => (
                             <li key={question.id}>
-                                <div>{question}</div>
+                                <Question id={id}>
                             </li>
                         ))}
                     </div>
@@ -37,7 +44,7 @@ class Home extends Component {
 
 function mapStateToProps ({ users, questions, authedUser }) {
 
-    // questionsIds = Object.keys(questions)
+    const questionsIds = Object.keys(questions)
     const user = ( authedUser && users.hasOwnProperty(authedUser) )
                     ? users[authedUser]
                     : { answers: {} }
@@ -51,6 +58,7 @@ function mapStateToProps ({ users, questions, authedUser }) {
     return {
         // unansweredIds,
         // answeredIds,
+        questionsIds,
         authedUserAnswers
     }
 }
