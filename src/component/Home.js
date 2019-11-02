@@ -8,12 +8,7 @@ class Home extends Component {
         console.log(this.props.authedUserAnswers)
         return(
             <div>
-                { this.props.questionsIds.map((id) => (
-                            <li key={id}>
-                                <Question id={id}/>
-                            </li>
-                        ))}
-                {/* <ul className="nav nav-tabs" id="myTab" role="tablist">
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
                     <li className="nav-item">
                         <a className="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Unanswered Questions</a>
                     </li>
@@ -23,20 +18,20 @@ class Home extends Component {
                 </ul>
                 <div className="tab-content" id="myTabContent">
                     <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                        { this.props.unansweredQ.map((question) => (
-                            <li key={question.id}>
-                                <Question id={id}>
+                        { this.props.unansweredIds.map((id) => (
+                            <li key={id}>
+                                <Question id={id}/>
                             </li>
                         ))}
                     </div>
                     <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                        { this.props.questionIds.map((id) => (
+                        { this.props.answeredIds.map((id) => (
                             <li key={id}>
-                                <div>Questions Id: {id}</div>
+                                <Question id={id}/>
                             </li>
                         ))}
                     </div>
-                </div> */}
+                </div>
             </div>
         )
     }
@@ -45,20 +40,22 @@ class Home extends Component {
 function mapStateToProps ({ users, questions, authedUser }) {
 
     const questionsIds = Object.keys(questions)
+                            .sort((a,b) => questions[b].timestamp - questions[a].timestamp)
+
     const user = ( authedUser && users.hasOwnProperty(authedUser) )
                     ? users[authedUser]
                     : { answers: {} }
+
     const authedUserAnswers = (user !== undefined) ? Object.keys(user.answers) : []
 
-    // const unansweredIds = questionsIds.filter((id) => authedUserAnswers.includes(id)
-    //                         .sort((a,b) => questions[b].timestamp - questions[a].timestamp))
-    // const answeredIds = questionsIds.filter((id) => authedUserAnswers.includes(id)
-    //                         .sort((a,b) => questions[b].timestamp - questions[a].timestamp))
+    const unansweredIds = questionsIds.filter((id) => 
+                                authedUserAnswers.includes(id))
+    const answeredIds = questionsIds.filter((id) => 
+                                authedUserAnswers.includes(id))
 
     return {
-        // unansweredIds,
-        // answeredIds,
-        questionsIds,
+        unansweredIds,
+        answeredIds,
         authedUserAnswers
     }
 }
