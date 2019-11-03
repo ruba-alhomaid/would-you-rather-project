@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Question from './Question'
 
-
 class Home extends Component {
     render() {
         console.log(this.props.authedUserAnswers)

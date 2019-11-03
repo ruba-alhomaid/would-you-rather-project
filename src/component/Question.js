@@ -11,7 +11,7 @@ class Question extends Component {
         }
 
         const {
-            name, avatar, timestamp, optionOne, optionTow
+            name, avatar, timestamp, optionOne, optionTwo
           } = question
 
         return(
@@ -26,7 +26,7 @@ class Question extends Component {
                         <span>{name}</span>
                         <div>{formatDate(timestamp)}</div>
                         <p>{optionOne}</p>
-                        <p>{optionTow}</p>
+                        <p>{optionTwo}</p>
                     </div>
                 </div>
             </div>
