@@ -1,6 +1,5 @@
 import {
     _getUsers,
-    //_getUser,
     _getQuestions,
     _saveQuestion,
     _saveQuestionAnswer,

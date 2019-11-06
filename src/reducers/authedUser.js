@@ -1,12 +1,22 @@
-import { SET_AUTHED_USER } from '../actions/authedUser'
+import { SET_AUTHED_USER, LOGOUT_AUTHED_USER } from '../actions/authedUser'
 
-export default function authedUser (state = null, action) {
+ let authedUser = (state = null, action) => {
     switch(action.type) {
         case SET_AUTHED_USER:
             return {
-                ...action.id
+                ...state,
+                authenticated: action.authenticated,
+                id: action.id,
+            }
+        case LOGOUT_AUTHED_USER:
+            return {
+                ...state,
+                authenticated: action.authenticated,
+                id: action.id,
             }
         default:
             return state
     }
 }
+
+export default authedUser
