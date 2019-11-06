@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { formatQuestion, formatDate } from '../utils/helpers'
+import ErrorPage from './ErrorPage'
 
 class Question extends Component {
     render() {
         const question = this.props
 
         if (question === null){
-            return <p>This question doesn't existed</p>
+            return <ErrorPage />
         }
 
         const {
@@ -37,7 +38,7 @@ class Question extends Component {
 function mapStateToProps ({authedUser, users, questions}, {id}) {
     const question = questions.hasOwnProperty(id)
                         ? questions[id]
-                        : ''
+                        : null
 
     return {
         authedUser,
