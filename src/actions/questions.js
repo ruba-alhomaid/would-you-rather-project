@@ -1,33 +1,26 @@
-import { saveQuestion } from '../utils/api'
-import { showLoading, hideLoading } from 'react-redux-loading'
-
 export const RECEIVE_QUESTIONS = 'RECEIVE_QUESTIONS'
 export const ADD_QUESTION = 'ADD_QUESTION'
+export const ANSWER_QUESTION = 'ANSWER_QUESTION'
 
-function addQuestion (question) {
-    return {
-        type: ADD_QUESTION,
-        question
-    }
-}
-
-export function handleAddQuestion (optionOne, optionTwo) {
-    return (dispatch, getState) => {
-        const { autheduser } = getState()
-        dispatch(showLoading())
-        return saveQuestion({
-            optionOne,
-            optionTwo,
-            author: autheduser
-        })
-            .then((question) => dispatch(addQuestion(question)))
-            .then(() => dispatch(hideLoading()))
-    }
-}
-
-export function receiveQuestions (questions) {
+export let receiveQuestions = (questions) => {
     return {
         type: RECEIVE_QUESTIONS,
         questions,
+    }
+}
+
+export let addQuestion = (question) => {
+    return {
+        type: ADD_QUESTION,
+        question,
+    }
+}
+
+export let answerQuestion = (qid, autheduser, answer) => {
+    return {
+        type: ANSWER_QUESTION,
+        qid,
+        autheduser,
+        answer,
     }
 }

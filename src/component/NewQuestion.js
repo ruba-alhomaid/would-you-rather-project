@@ -1,26 +1,30 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Redirect } from 'react-router-dom'
 import { handleAddQuestion } from '../actions/questions'
 
 class NewQuestion extends Component {
     state = {
         optionOne: '',
-        optionTwo: ''
+        optionTwo: '',
+        submitted: false
     }
 
     handleOptionOneChange = (e) => {
+        e.preventDefault()
         const optionOne = e.target.value
         
         this.setState(() => ({
-            optionOne
+            optionOne: optionOne
         }))
     }
 
     handleOptionTwoChange = (e) => {
+        e.preventDefault()
         const optionTwo = e.target.value
         
         this.setState(() => ({
-            optionTwo
+            optionTwo: optionTwo
         }))
     }
 
@@ -34,11 +38,16 @@ class NewQuestion extends Component {
 
         this.setState(() => ({
             optionOne: '',
-            optionTwo: ''
+            optionTwo: '',
+            submitted: true
         }))
     }
 
     render() {
+
+        if (this.state.submitted)
+            return <Redirect to='/home'/>
+
         const { optionOne } = this.state
         const { optionTwo } = this.state
 
@@ -72,4 +81,10 @@ class NewQuestion extends Component {
     }
 } 
 
-export default connect()(NewQuestion)
+const mapStateToProps = ({ authedUser }) => {
+    return {
+        authedUser
+    }
+}
+
+export default connect(mapStateToProps)(NewQuestion)
