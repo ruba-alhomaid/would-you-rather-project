@@ -30,7 +30,7 @@ export let handleUserLogin = (id) => {
 export let handleUserLogout = () => {
     return(dispatch) => {
         dispatch(logoutAuthedUser())
-        window.location.href= '/'
+        window.location.href= '/login'
     }
 }
 
