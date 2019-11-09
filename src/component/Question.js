@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { formatQuestion } from '../utils/helpers'
 import ErrorPage from './ErrorPage'
+import { Link } from 'react-router-dom'
 
 class Question extends Component {
     render() {
@@ -30,7 +31,7 @@ class Question extends Component {
                         <p>OR</p>
                         <p>{optionTwo.text}</p>
                     </div>
-                    <button >View Poll</button>
+                    <Link to='/viewpoll/{question.id}'>View Poll</Link>
                 </div>
             </div>
         )

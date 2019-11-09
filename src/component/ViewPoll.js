@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import ErrorPage from './ErrorPage'
 import { handleAnswerQuestion } from '../actions/shared'
 import { formatQuestion } from '../utils/helpers'
+import { Redirect } from 'react-router-dom'
 
 class ViewPoll extends Component {
     state = {
@@ -32,6 +33,9 @@ class ViewPoll extends Component {
 
     render() {
         const question = this.props.question
+
+        if (this.state.submitted)
+        return <Redirect to='/result/{question.id}'/>
 
         if (question === null){
             return <ErrorPage />

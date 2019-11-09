@@ -9,6 +9,8 @@ import Question from './Question'
 import NewQuestion from './NewQuestion'
 import Leaderboard from './Leaderboard'
 import LoadingBar from 'react-redux-loading'
+import ViewPoll from './ViewPoll'
+import Result from './Result'
 
 class App extends Component {
     componentDidMount() {
@@ -30,6 +32,8 @@ class App extends Component {
                                 <Route path='/question/:id' component={Question}/>
                                 <Route path='/new' component={NewQuestion}/>
                                 <Route path='/leaderboard' component={Leaderboard}/>
+                                <Route path='/viewpoll/:id' component={ViewPoll}/>
+                                <Route path='/result/:id' component={Result}/>
                             </div>
                     }
                 </Fragment>
