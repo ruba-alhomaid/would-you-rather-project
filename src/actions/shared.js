@@ -19,14 +19,13 @@ export let handleInitialData = () => {
     }
 }
 
-export let handleAddQuestion = (optionOne, optionTwo) => {
-    return (dispatch, getState) => {
-        const { autheduser } = getState()
+export let handleAddQuestion = (optionOne, optionTwo, authedUser) => {
+    return (dispatch) => {
         dispatch(showLoading())
         return saveQuestion({
             optionOneText: optionOne,
             optionTwoText: optionTwo,
-            author: autheduser
+            author: authedUser.id
         })
             .then((question) => {
                 dispatch(userAddQuestion(question))
@@ -36,18 +35,17 @@ export let handleAddQuestion = (optionOne, optionTwo) => {
     }
 }
 
-export let handleAnswerQuestion = (qid, answer) => {
-    return (dispatch, getState) => {
-        const { autheduser } = getState()
+export let handleAnswerQuestion = (qid, answer, authedUser) => {
+    return (dispatch) => {
         dispatch(showLoading())
         return saveQuestionAnswer({
-            autheduser,
+            authedUser,
             qid,
             answer
         })
             .then(() => {
-                dispatch(userAnswerQuestion(qid, autheduser, answer))
-                dispatch(answerQuestion(qid, autheduser, answer))
+                dispatch(userAnswerQuestion(authedUser, qid, answer))
+                dispatch(answerQuestion(qid, authedUser, answer))
             })
             .then(() => dispatch(hideLoading()))
     }

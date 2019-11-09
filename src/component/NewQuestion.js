@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { handleAddQuestion } from '../actions/questions'
+import { handleAddQuestion } from '../actions/shared'
 
 class NewQuestion extends Component {
     state = {
@@ -10,31 +10,21 @@ class NewQuestion extends Component {
         submitted: false
     }
 
-    handleOptionOneChange = (e) => {
+    handleChange = (e) => {
         e.preventDefault()
-        const optionOne = e.target.value
-        
+        const option = e.target.value
+        e.persist()
         this.setState(() => ({
-            optionOne: optionOne
-        }))
-    }
-
-    handleOptionTwoChange = (e) => {
-        e.preventDefault()
-        const optionTwo = e.target.value
-        
-        this.setState(() => ({
-            optionTwo: optionTwo
+            [e.target.name]: option
         }))
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
-        const { optionOne } = this.state
-        const { optionTwo } = this.state
-        const { dispatch } = this.props
+        const { optionOne, optionTwo } = this.state
+        const { dispatch, authedUser } = this.props
 
-        dispatch(handleAddQuestion(optionOne, optionTwo))
+        dispatch(handleAddQuestion(optionOne, optionTwo, authedUser))
 
         this.setState(() => ({
             optionOne: '',
@@ -58,17 +48,17 @@ class NewQuestion extends Component {
                     <h6>Would you rather..</h6>
                     <input 
                         type="text" 
-                        name="option-one"
+                        name="optionOne"
                         placeholder="Enter Option One Text Here"
                         value={optionOne}
-                        onChange={this.handleOptionOneChange}/>
+                        onChange={this.handleChange}/>
                     <h6>OR</h6>
                     <input
                         type="text" 
-                        name="option-two"
+                        name="optionTwo"
                         placeholder="Enter Option Two Text Here"
                         value={optionTwo}
-                        onChange={this.handleOptionTwoChange}/>
+                        onChange={this.handleChange}/>
                     <button
                         className='btn'
                         type='submit'
@@ -79,9 +69,9 @@ class NewQuestion extends Component {
             </div>
         )
     }
-} 
+}
 
-const mapStateToProps = ({ authedUser }) => {
+function mapStateToProps ({ authedUser }) {
     return {
         authedUser
     }

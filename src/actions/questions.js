@@ -16,11 +16,11 @@ export let addQuestion = (question) => {
     }
 }
 
-export let answerQuestion = (qid, autheduser, answer) => {
+export let answerQuestion = (qid, authedUser, answer) => {
     return {
         type: ANSWER_QUESTION,
         qid,
-        autheduser,
+        authedUser,
         answer,
     }
 }

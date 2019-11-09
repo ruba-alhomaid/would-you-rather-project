@@ -12,7 +12,7 @@ export default function users (state = {}, action) {
                 ...state,
                 [action.question.author]: {
                     ...state[action.question.author],
-                    questions: [...state[action.question.author].question]
+                    questions: [...state[action.question.author].questions, action.question]
                 }
             }
         case USER_ANSWER_QUESTION:

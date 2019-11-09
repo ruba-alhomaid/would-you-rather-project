@@ -1,22 +1,23 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { formatQuestion, formatDate } from '../utils/helpers'
+import { formatQuestion } from '../utils/helpers'
 import ErrorPage from './ErrorPage'
 
 class Question extends Component {
     render() {
-        const question = this.props
+        const question = this.props.question
 
         if (question === null){
             return <ErrorPage />
         }
 
         const {
-            name, avatar, timestamp, optionOne, optionTwo
+            name, avatar, optionOne, optionTwo
           } = question
 
         return(
             <div className='question'>
+                <h1><span>{name}</span> Says:</h1>
                 <img
                     src={avatar}
                     alt={`Avatar of ${name}`}
@@ -24,11 +25,12 @@ class Question extends Component {
                 />
                 <div className='question-info'>
                     <div>
-                        <span>{name}</span>
-                        <div>{formatDate(timestamp)}</div>
-                        <p>{optionOne}</p>
-                        <p>{optionTwo}</p>
+                        <h1>Would You Rather...</h1>
+                        <p>{optionOne.text}</p>
+                        <p>OR</p>
+                        <p>{optionTwo.text}</p>
                     </div>
+                    <button >View Poll</button>
                 </div>
             </div>
         )
