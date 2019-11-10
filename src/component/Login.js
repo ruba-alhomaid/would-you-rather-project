@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { handleUserLogin } from '../actions/authedUser'
+import { Redirect } from 'react-router-dom'
 
 class Login extends Component {
     state = {
-        userToLogin: ''
+        userToLogin: '',
+        loggedin: false
     }
 
     handleChange = (e) => {
@@ -17,15 +19,23 @@ class Login extends Component {
     handleLogin = (e) => {
         e.preventDefault()
         const { userToLogin } = this.state
+        const { dispatch } = this.props
 
         userToLogin 
-            ? handleUserLogin(userToLogin) 
+            ? dispatch(handleUserLogin(userToLogin)) && 
+                this.setState(() => ({ 
+                    loggedin: true 
+                }))
             : alert('Select a user!')
+    
     }
 
     render() {
         const { users } = this.props
         const { userToLogin } = this.state
+
+        if (this.state.loggedin)
+            return <Redirect to='/home'/>
         
         return(
             <div>
@@ -43,12 +53,12 @@ class Login extends Component {
                                 alt={users[userToLogin]}
                                 className='user-avatar'/>
                             <select className='select-user'
-                                    onChange={(e) => this.handleChange}>
+                                    onChange={this.handleChange}>
                                     <option value=''>Select user..</option>
                                     {
-                                        Object.keys(users).map((user) => (
-                                            <option className='option' key={user.id} value={user}>
-                                                {user}
+                                        Object.values(users).map((user) => (
+                                            <option className='option' key={user.id} value={user.id}>
+                                                {user.name}
                                             </option>
                                         ))
                                     }

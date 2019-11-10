@@ -4,7 +4,6 @@ import Question from './Question'
 
 class Home extends Component {
     render() {
-        console.log(this.props.unansweredIds)
         return(
             <div className="tab-content" id="myTabContent">
                 <div title="Unanswered Questions">

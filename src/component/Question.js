@@ -7,14 +7,20 @@ import { Link } from 'react-router-dom'
 class Question extends Component {
     render() {
         const question = this.props.question
+        const answers = this.props.answers
+        const {qid, name, avatar, optionOne, optionTwo} = question
+        const linkToPoll = '/viewpoll/' + qid
+        const linkToResult = '/result/' + qid
+        let isItAnswered
+        console.log('answers is:', answers)
+        if (answers[qid] === undefined)
+            isItAnswered = false 
+        else
+            isItAnswered = true
 
-        if (question === null){
+        if (qid === null){
             return <ErrorPage />
         }
-
-        const {
-            name, avatar, optionOne, optionTwo
-          } = question
 
         return(
             <div className='question'>
@@ -31,20 +37,25 @@ class Question extends Component {
                         <p>OR</p>
                         <p>{optionTwo.text}</p>
                     </div>
-                    <Link to='/viewpoll/{question.id}'>View Poll</Link>
+                    { isItAnswered 
+                        ? <Link to={linkToResult} className='toQuestion'>View Poll</Link>
+                        : <Link to={linkToPoll} className='toQuestion'>View Poll</Link>
+                        }
                 </div>
             </div>
         )
     }
 }
 
-function mapStateToProps ({authedUser, users, questions}, {id}) {
-    const question = questions.hasOwnProperty(id)
-                        ? questions[id]
+function mapStateToProps ({authedUser, users, questions}, {qid}) {
+    const question = questions.hasOwnProperty(qid)
+                        ? questions[qid]
                         : null
+    const answers = authedUser.id.answers
 
     return {
         authedUser,
+        answers,
         question: question 
                     ? formatQuestion(question, users[question.author], authedUser)
                     : null

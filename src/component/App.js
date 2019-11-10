@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom' 
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
@@ -20,23 +20,21 @@ class App extends Component {
     render() {
         return(
             <Router>
-                <Fragment>
-                    <LoadingBar/>
-                    {this.props.authedUser === null
-                        ? <Route path='/login' component={Login}/>
-                        : this.props.loading === true
-                            ? null
-                            : <div style={{width:"100%"}}>
-                                <Navbar authedUser={this.props.authedUser.name} authedUserAvatar={this.props.authedUser.avatarURL}/>
-                                <Route path='/home' component={Home}/>
-                                <Route path='/question/:id' component={Question}/>
-                                <Route path='/new' component={NewQuestion}/>
-                                <Route path='/leaderboard' component={Leaderboard}/>
-                                <Route path='/viewpoll/:id' component={ViewPoll}/>
-                                <Route path='/result/:id' component={Result}/>
-                            </div>
-                    }
-                </Fragment>
+                <LoadingBar/>
+                {this.props.authedUser === null
+                    ? <Login/>
+                    : this.props.loading === true
+                        ? null
+                        : <div style={{width:"100%"}}>
+                            <Navbar authedUser={this.props.authedUser.id.name} authedUserAvatar={this.props.authedUser.id.avatarURL}/>
+                            <Route path='/home' component={Home}/>
+                            <Route path='/question/:id' component={Question}/>
+                            <Route path='/new' component={NewQuestion}/>
+                            <Route path='/leaderboard' component={Leaderboard}/>
+                            <Route path='/viewpoll/:id' component={ViewPoll}/>
+                            <Route path='/result/:id' component={Result}/>
+                        </div>
+                }
             </Router>
         )
     }

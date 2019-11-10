@@ -1,7 +1,15 @@
 import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
+import { handleUserLogout } from '../actions/authedUser'
+import { connect } from 'react-redux'
 
 class Navbar extends Component {
+
+    handleChange = () => {
+        const { dispatch } = this.props
+        dispatch(handleUserLogout())
+    }
+
     render(){
         return(
             <div>
@@ -25,15 +33,18 @@ class Navbar extends Component {
                     </ul>
                 </nav>
                 <div className='authed-user-info'>
-                    <p className='user-name'>{this.props.authedUser}</p>
                     <img 
                         src={this.props.authedUserAvatar}
                         alt={this.props.authedUser}
                         className='user-pic'/>
+                    <p className='user-name'>{this.props.authedUser}</p>
+                    <button 
+                        className='logout-btn'
+                        onClick={this.handleChange}>Sign out</button>
                 </div>
             </div>
         )
     }
 }
 
-export default Navbar
+export default connect()(Navbar)
