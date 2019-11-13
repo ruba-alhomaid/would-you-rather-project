@@ -10,7 +10,7 @@ class Home extends Component {
                     <ul className="questionList">
                         { this.props.unansweredIds.map((id) => (
                             <li key={id} className="question">
-                                <Question id={id}/>
+                                <Question qid={id}/>
                             </li>
                         ))}
                     </ul>
@@ -19,7 +19,7 @@ class Home extends Component {
                     <ul className="questionList">
                         { this.props.answeredIds.map((id) => (
                             <li key={id} className="question">
-                                <Question id={id}/>
+                                <Question qid={id}/>
                             </li>
                         ))}
                     </ul>

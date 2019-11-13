@@ -8,11 +8,10 @@ class Question extends Component {
     render() {
         const question = this.props.question
         const answers = this.props.answers
-        const {qid, name, avatar, optionOne, optionTwo} = question
-        const linkToPoll = '/viewpoll/' + qid
-        const linkToResult = '/result/' + qid
+        const qid = this.props.qid
+        const { name, avatar, optionOne, optionTwo} = question
         let isItAnswered
-        console.log('answers is:', answers)
+
         if (answers[qid] === undefined)
             isItAnswered = false 
         else
@@ -38,8 +37,8 @@ class Question extends Component {
                         <p>{optionTwo.text}</p>
                     </div>
                     { isItAnswered 
-                        ? <Link to={linkToResult} className='toQuestion'>View Poll</Link>
-                        : <Link to={linkToPoll} className='toQuestion'>View Poll</Link>
+                        ? <Link to={`/result/${qid}`} className='toQuestion'>View Poll</Link>
+                        : <Link to={`/viewpoll/${qid}`} className='toQuestion'>View Poll</Link>
                         }
                 </div>
             </div>
@@ -56,6 +55,7 @@ function mapStateToProps ({authedUser, users, questions}, {qid}) {
     return {
         authedUser,
         answers,
+        qid,
         question: question 
                     ? formatQuestion(question, users[question.author], authedUser)
                     : null

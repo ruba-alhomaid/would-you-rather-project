@@ -8,22 +8,23 @@ import { Redirect } from 'react-router-dom'
 class ViewPoll extends Component {
     state = {
         answer: '',
+        qid: this.props.match.params.id,
         submitted: false
     }
 
-    handleChange = (e) => {
-        e.preventDefault()
-        this.setState(() => ({
+    handleClick = (e) => {
+        this.setState({
             answer: e.target.value
-        }))
+        })
     }
 
     handleSubmit = (e) => {
         e.preventDefault()
         const answer = this.state.answer
-        const { dispatch, authedUser, question } = this.props
+        const qid = this.state.qid
+        const { dispatch, authedUser } = this.props
 
-        dispatch(handleAnswerQuestion(authedUser, question.id, answer))
+        dispatch(handleAnswerQuestion(authedUser, qid, answer))
 
         this.setState(() => ({
             answer: '',
@@ -32,18 +33,27 @@ class ViewPoll extends Component {
     }
 
     render() {
-        const question = this.props.question
+        const { authedUser, users, questions } = this.props
+        const qid = this.state.qid
+
+        const question = questions[qid]
+                            ? questions[qid]
+                            : null
+
+        const questionInfo = question 
+                            ? formatQuestion(question, users[question.author], authedUser)
+                            : null
 
         if (this.state.submitted)
-        return <Redirect to='/result/{question.id}'/>
-
+        return <Redirect to={`/result/${qid}`}/>
+        
         if (question === null){
             return <ErrorPage />
         }
 
         const {
             name, avatar, optionOne, optionTwo
-          } = question
+          } = questionInfo
 
         return(
             <div className='view-poll'>
@@ -56,21 +66,23 @@ class ViewPoll extends Component {
                 <form className='answer-question' onSubmit={this.handleSubmit}>
                     <div>
                         <h1>Would You Rather...</h1>
-                        <input 
-                            type='radio' 
-                            name='option' 
-                            value='optionOne' 
-                            onChange={this.handleChange}>
-                                {optionOne.text}
-                        </input>
+                        <label>
+                            <input 
+                                type='radio' 
+                                name='option' 
+                                value='optionOne' 
+                                onClick={this.handleClick}/>
+                                    {optionOne.text}
+                        </label>
                         <p>OR</p>
-                        <input 
-                            type='radio' 
-                            name='option' 
-                            value='optionTwo' 
-                            onChange={this.handleChange}>
-                                {optionTwo.text}
-                        </input>
+                        <label>
+                            <input 
+                                type='radio' 
+                                name='option' 
+                                value='optionTwo' 
+                                onClick={this.handleClick}/>
+                                    {optionTwo.text}
+                        </label>
                     </div>
                     <button
                         className='btn'
@@ -84,16 +96,11 @@ class ViewPoll extends Component {
     }
 }
 
-function mapStateToProps ({authedUser, users, questions}, {id}) {
-    const question = questions.hasOwnProperty(id)
-                        ? questions[id]
-                        : null
-
+function mapStateToProps ({authedUser, users, questions}) {
     return {
         authedUser,
-        question: question 
-                    ? formatQuestion(question, users[question.author], authedUser)
-                    : null
+        users,
+        questions
     }
 }
 

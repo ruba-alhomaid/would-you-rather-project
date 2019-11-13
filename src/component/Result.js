@@ -5,13 +5,23 @@ import ErrorPage from './ErrorPage'
 
 class Result extends Component {
     render() {
-        const question = this.props.question
+        const { authedUser, users, questions } = this.props
+        const qid = this.props.match.params.id
+        console.log('id', qid)
+
+        const question = questions[qid]
+                ? questions[qid]
+                : null
+
+        const questionInfo = question 
+                ? formatQuestion(question, users[question.author], authedUser)
+                : null 
 
         if (question === null){
             return <ErrorPage />
         }
 
-        const {name, avatar, optionOne, optionTwo} = question
+        const {name, avatar, optionOne, optionTwo} = questionInfo
         const optionOneVotes = optionOne.votes.length
         const optionTwoVotes = optionTwo.votes.length
         const totalVotes = optionOneVotes + optionTwoVotes
@@ -30,12 +40,12 @@ class Result extends Component {
                     <div>
                         <h1>Result:</h1>
                         <p>{optionOne.text}</p>
-                        <p>{optionOnePercentage}</p>
-                        <p>${optionOneVotes} out of ${totalVotes} votes</p>
+                        <p>{optionOnePercentage}%</p>
+                        <p>{optionOneVotes} out of {totalVotes} votes</p>
                         <p>OR</p>
                         <p>{optionTwo.text}</p>
-                        <p>{optionTwoPercentage}</p>
-                        <p>${optionTwoVotes} out of ${totalVotes} votes</p>
+                        <p>{optionTwoPercentage}%</p>
+                        <p>{optionTwoVotes} out of {totalVotes} votes</p>
                     </div>
                 </div>
             </div>
@@ -43,16 +53,11 @@ class Result extends Component {
     }
 }
 
-function mapStateToProps ({authedUser, users, questions}, {id}) {
-    const question = questions.hasOwnProperty(id)
-                        ? questions[id]
-                        : null
-
+function mapStateToProps ({authedUser, users, questions}) {
     return {
         authedUser,
-        question: question 
-                    ? formatQuestion(question, users[question.author], authedUser)
-                    : null
+        users,
+        questions
     }
 }
 
