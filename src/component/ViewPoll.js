@@ -22,9 +22,10 @@ class ViewPoll extends Component {
         e.preventDefault()
         const answer = this.state.answer
         const qid = this.state.qid
-        const { dispatch, authedUser } = this.props
-
-        dispatch(handleAnswerQuestion(authedUser, qid, answer))
+        const { dispatch, authedUser } = this.props  
+        console.log('auth',authedUser)
+        
+        dispatch(handleAnswerQuestion(qid, answer, authedUser))  
 
         this.setState(() => ({
             answer: '',
