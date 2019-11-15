@@ -23,7 +23,6 @@ class ViewPoll extends Component {
         const answer = this.state.answer
         const qid = this.state.qid
         const { dispatch, authedUser } = this.props  
-        console.log('auth',authedUser)
         
         dispatch(handleAnswerQuestion(qid, answer, authedUser))  
 

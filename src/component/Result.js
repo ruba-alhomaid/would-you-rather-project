@@ -7,7 +7,6 @@ class Result extends Component {
     render() {
         const { authedUser, users, questions } = this.props
         const qid = this.props.match.params.id
-        console.log('id', qid)
 
         const question = questions[qid]
                 ? questions[qid]
