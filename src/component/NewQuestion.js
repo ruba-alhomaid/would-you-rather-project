@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { handleAddQuestion } from '../actions/shared'
+import { Container, Card, Button, Form } from 'react-bootstrap'
 
 class NewQuestion extends Component {
     state = {
@@ -42,31 +43,39 @@ class NewQuestion extends Component {
         const { optionTwo } = this.state
 
         return(
-            <div>
-                <h3>Create New Question</h3>
-                <form className='new-question' onSubmit={this.handleSubmit}>
-                    <h6>Would you rather..</h6>
-                    <input 
-                        type="text" 
-                        name="optionOne"
-                        placeholder="Enter Option One Text Here"
-                        value={optionOne}
-                        onChange={this.handleChange}/>
-                    <h6>OR</h6>
-                    <input
-                        type="text" 
-                        name="optionTwo"
-                        placeholder="Enter Option Two Text Here"
-                        value={optionTwo}
-                        onChange={this.handleChange}/>
-                    <button
-                        className='btn'
-                        type='submit'
-                        disabled={( optionOne === '' ) || ( optionTwo === '' )}>
-                        Submit
-                    </button>
-                </form>
-            </div>
+            <Container className='col d-flex mt-5 justify-content-center'>
+                <Card bg="light" style={{ width: '34rem' }}>
+                    <Card.Header>Create New Question</Card.Header>
+                    <Card.Body>
+                        <Card.Title>Would you rather..</Card.Title>
+                        <Form className="mt-3" onSubmit={this.handleSubmit}>
+                            <Form.Control 
+                                type="text" 
+                                name="optionOne"
+                                placeholder="Enter Option One Text Here"
+                                value={optionOne}
+                                onChange={this.handleChange}
+                            />
+                            <p className='mt-3 text-center'>OR</p>
+                            <Form.Control 
+                                type="text" 
+                                name="optionTwo"
+                                placeholder="Enter Option Two Text Here"
+                                value={optionTwo}
+                                onChange={this.handleChange}
+                            />
+                            <Button 
+                                className="mt-5 float-right"
+                                variant="info" 
+                                type="submit"
+                                disabled={( optionOne === '' ) || ( optionTwo === '' )}
+                                block>
+                                    Submit
+                            </Button>
+                        </Form>
+                    </Card.Body>
+                </Card>
+            </Container>
         )
     }
 }

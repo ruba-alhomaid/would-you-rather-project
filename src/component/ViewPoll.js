@@ -92,10 +92,11 @@ class ViewPoll extends Component {
                                         />
                                     </div>
                                     <Button 
-                                        className="mt-5 float-right"
+                                        className="mt-5"
                                         variant="info" 
                                         type="submit"
-                                        disabled={this.state.answer === ''}>
+                                        disabled={this.state.answer === ''}
+                                        block>
                                             Submit
                                     </Button>
                                 </Form>

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { formatQuestion } from '../utils/helpers'
 import ErrorPage from './ErrorPage'
+import { Container, Card, Row, Col, ProgressBar } from 'react-bootstrap'
 
 class Result extends Component {
     render() {
@@ -28,26 +29,32 @@ class Result extends Component {
         const optionTwoPercentage = (optionTwoVotes / totalVotes * 100).toFixed(2)
 
         return(
-            <div className='result'>
-                <h1>Asked by <span>{name}</span></h1>
-                <img
-                    src={avatar}
-                    alt={`Avatar of ${name}`}
-                    className='avatar'
-                />
-                <div className='question-result'>
-                    <div>
-                        <h1>Result:</h1>
-                        <p>{optionOne.text}</p>
-                        <p>{optionOnePercentage}%</p>
-                        <p>{optionOneVotes} out of {totalVotes} votes</p>
-                        <p>OR</p>
-                        <p>{optionTwo.text}</p>
-                        <p>{optionTwoPercentage}%</p>
-                        <p>{optionTwoVotes} out of {totalVotes} votes</p>
-                    </div>
-                </div>
-            </div>
+            <Container className='col d-flex mt-5 justify-content-center'>
+                <Card bg="light" style={{ width: '34rem' }}>
+                    <Card.Header>Asked by <span>{name}</span></Card.Header>
+                    <Card.Body>
+                        <Row>
+                            <Col>
+                                <img
+                                    src={avatar}
+                                    alt={`Avatar of ${name}`}
+                                    width="200"
+                                    height="200"
+                                    className='avatar'/>
+                            </Col>
+                            <Col>
+                                <Card.Title>Result:</Card.Title>
+                                <p>{optionOne.text}</p>
+                                <ProgressBar striped variant="info" now={optionOnePercentage} label={`${optionOnePercentage}%`}/>
+                                <small className="text-muted">{optionOneVotes} out of {totalVotes} votes</small>
+                                <p className='mt-3'>{optionTwo.text}</p>
+                                <ProgressBar striped variant="info" now={optionTwoPercentage} label={`${optionTwoPercentage}%`}/>
+                                <small className="text-muted">{optionTwoVotes} out of {totalVotes} votes</small>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+            </Container>
         )
     }
 }

@@ -43,9 +43,9 @@ class Question extends Component {
                                 <Card.Text>{optionTwo.text}</Card.Text>
                                 { isItAnswered 
                                     ? <Link to={`/result/${qid}`} className='toQuestion'>
-                                        <Button variant="info">View Poll</Button></Link>
+                                        <Button variant="info" block>View Poll</Button></Link>
                                     : <Link to={`/viewpoll/${qid}`} className='toQuestion'>
-                                        <Button variant="info">View Poll</Button></Link>
+                                        <Button variant="info" block>View Poll</Button></Link>
                                     }
                             </Col>
                         </Row>
