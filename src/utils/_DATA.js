@@ -165,9 +165,9 @@ export function _saveQuestion (question) {
       
       users = {
         ...users,
-        [authedUser]: {
-          ...users[authedUser],
-          questions: users[authedUser].questions.concat([formattedQuestion.id])
+        [authedUser.id]: {
+          ...users[authedUser.id],
+          questions: users[authedUser.id].questions.concat([formattedQuestion.id])
         }
       }
 

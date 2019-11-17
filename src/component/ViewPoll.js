@@ -4,6 +4,7 @@ import ErrorPage from './ErrorPage'
 import { handleAnswerQuestion } from '../actions/shared'
 import { formatQuestion } from '../utils/helpers'
 import { Redirect } from 'react-router-dom'
+import { Container, Card, Row, Col, Button, Form } from 'react-bootstrap'
 
 class ViewPoll extends Component {
     state = {
@@ -56,42 +57,53 @@ class ViewPoll extends Component {
           } = questionInfo
 
         return(
-            <div className='view-poll'>
-                <h1><span>{name}</span> Asks:</h1>
-                <img
-                    src={avatar}
-                    alt={`Avatar of ${name}`}
-                    className='avatar'
-                />
-                <form className='answer-question' onSubmit={this.handleSubmit}>
-                    <div>
-                        <h1>Would You Rather...</h1>
-                        <label>
-                            <input 
-                                type='radio' 
-                                name='option' 
-                                value='optionOne' 
-                                onClick={this.handleClick}/>
-                                    {optionOne.text}
-                        </label>
-                        <p>OR</p>
-                        <label>
-                            <input 
-                                type='radio' 
-                                name='option' 
-                                value='optionTwo' 
-                                onClick={this.handleClick}/>
-                                    {optionTwo.text}
-                        </label>
-                    </div>
-                    <button
-                        className='btn'
-                        type='submit'
-                        disabled={this.state.answer === ''}>
-                        Submit
-                    </button>
-                </form>
-            </div>
+            <Container className='col d-flex mt-5 justify-content-center'>
+                <Card bg="light" style={{ width: '34rem' }}>
+                    <Card.Header><span>{name}</span> Asks:</Card.Header>
+                    <Card.Body>
+                        <Row>
+                            <Col>
+                                <img
+                                    src={avatar}
+                                    alt={`Avatar of ${name}`}
+                                    width="200"
+                                    height="200"
+                                    className='avatar'/>
+                            </Col>
+                            <Col>
+                                <Form className="mt-3" onSubmit={this.handleSubmit}>
+                                    <div key='default-radio'>
+                                        <Form.Check 
+                                            type='radio'
+                                            id='default-radio'
+                                            label={optionOne.text}
+                                            name='option' 
+                                            value='optionOne' 
+                                            onClick={this.handleClick}
+                                        />
+                                        <p className='mt-3'>OR</p>
+                                        <Form.Check
+                                            type='radio'
+                                            id='default-radio'
+                                            label={optionTwo.text}
+                                            name='option' 
+                                            value='optionTwo' 
+                                            onClick={this.handleClick}
+                                        />
+                                    </div>
+                                    <Button 
+                                        className="mt-5 float-right"
+                                        variant="info" 
+                                        type="submit"
+                                        disabled={this.state.answer === ''}>
+                                            Submit
+                                    </Button>
+                                </Form>
+                            </Col>
+                        </Row>
+                    </Card.Body>
+                </Card>
+            </Container>
         )
     }
 }

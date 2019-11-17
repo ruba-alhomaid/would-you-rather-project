@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions/shared'
 import Home from './Home'
-import Navbar from './Navbar'
+import NavBar from './NavBar'
 import Login from './Login'
 import Question from './Question'
 import NewQuestion from './NewQuestion'
@@ -26,7 +26,7 @@ class App extends Component {
                     : this.props.loading === true
                         ? null
                         : <div style={{width:"100%"}}>
-                            <Navbar authedUser={this.props.authedUser.id.name} authedUserAvatar={this.props.authedUser.id.avatarURL}/>
+                            <NavBar authedUser={this.props.authedUser.id.name} authedUserAvatar={this.props.authedUser.id.avatarURL}/>
                             <Route path='/home' component={Home}/>
                             <Route path='/question/:id' component={Question}/>
                             <Route path='/new' component={NewQuestion}/>

@@ -1,9 +1,10 @@
 import React from 'react'
+import { Alert } from 'react-bootstrap'
 
 const Error = () => (
-        <div>
-            <h1>Error 404 .. This page doesn't exist</h1>
-        </div>
+    <Alert key='danger' variant='danger'>
+        Error 404 .. This page doesn't exist !
+    </Alert>
 )
 
 export default Error

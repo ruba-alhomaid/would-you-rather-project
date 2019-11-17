@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
 import { handleUserLogout } from '../actions/authedUser'
 import { connect } from 'react-redux'
+import { Navbar, Nav, Form, Button } from 'react-bootstrap'
 
-class Navbar extends Component {
+class NavBar extends Component {
 
     handleChange = () => {
         const { dispatch } = this.props
@@ -12,39 +12,32 @@ class Navbar extends Component {
 
     render(){
         return(
-            <div>
-                <nav className='nav'>
-                    <ul className='nav-list'>
-                        <li key='home-nav'>
-                            <NavLink to='/home' activeClassName='active'>
-                                Home
-                            </NavLink>
-                        </li>
-                        <li key='new-question-nav'>
-                            <NavLink to='/new' activeClassName='active'>
-                                New Question
-                            </NavLink>
-                        </li>
-                        <li key='leaderboard-nav'>
-                            <NavLink to='/leaderboard' activeClassName='active'>
-                                Leaderboard
-                            </NavLink>
-                        </li>
-                    </ul>
-                </nav>
-                <div className='authed-user-info'>
-                    <img 
-                        src={this.props.authedUserAvatar}
-                        alt={this.props.authedUser}
-                        className='user-pic'/>
-                    <p className='user-name'>{this.props.authedUser}</p>
-                    <button 
-                        className='logout-btn'
-                        onClick={this.handleChange}>Sign out</button>
-                </div>
-            </div>
+            <Navbar bg="light" expand="lg">
+                <Navbar.Brand href="/home">Would You Rather!</Navbar.Brand>
+                <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                <Navbar.Collapse id="basic-navbar-nav">
+                    <Nav className="mr-auto">
+                        <Nav.Link href="/home">Home</Nav.Link>
+                        <Nav.Link href="/new">New Question</Nav.Link>
+                        <Nav.Link href="/leaderboard">Leaderboard</Nav.Link>
+                    </Nav>
+                    <Form inline>
+                        <img
+                            src={this.props.authedUserAvatar}
+                            alt={this.props.authedUser}
+                            width="55"
+                            height="55"
+                            className="d-inline-block align-top"
+                            />
+                        <Navbar.Text className='ml-2'>
+                            {this.props.authedUser}
+                        </Navbar.Text>
+                        <Button variant="info" size="sm" className='ml-2' onClick={this.handleChange}>Sign out</Button>
+                    </Form>
+                </Navbar.Collapse>
+            </Navbar>
         )
     }
 }
 
-export default connect()(Navbar)
+export default connect()(NavBar)

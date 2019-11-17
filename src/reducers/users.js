@@ -8,11 +8,12 @@ export default function users (state = {}, action) {
                 ...action.users
             }
         case USER_ADD_QUESTION:
+                console.log('author',action.question.author)
             return {
                 ...state,
-                [action.question.author]: {
-                    ...state[action.question.author],
-                    questions: [...state[action.question.author].questions, action.question]
+                [action.question.author.id]: {
+                    ...state[action.question.author.id],
+                    questions: [...state[action.question.author.id].questions, action.question]
                 }
             }
         case USER_ANSWER_QUESTION:
