@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { formatQuestion } from '../utils/helpers'
 import ErrorPage from './ErrorPage'
-import { Container, Card, Row, Col, ProgressBar } from 'react-bootstrap'
+import { Container, Card, Row, Col, ProgressBar, Badge } from 'react-bootstrap'
 
 class Result extends Component {
     render() {
@@ -27,6 +27,7 @@ class Result extends Component {
         const totalVotes = optionOneVotes + optionTwoVotes
         const optionOnePercentage = (optionOneVotes / totalVotes * 100).toFixed(2)
         const optionTwoPercentage = (optionTwoVotes / totalVotes * 100).toFixed(2)
+        const authedUserOption = users[authedUser.id].answers[qid]
 
         return(
             <Container className='col d-flex mt-5 justify-content-center'>
@@ -44,10 +45,21 @@ class Result extends Component {
                             </Col>
                             <Col>
                                 <Card.Title>Result:</Card.Title>
-                                <p>{optionOne.text}</p>
+                                <p>
+                                    {optionOne.text} 
+                                    {authedUserOption === 'optionOne' 
+                                        ? <Badge className='text-danger'>You Voted</Badge> 
+                                        : null}
+                                </p>
                                 <ProgressBar striped variant="info" now={optionOnePercentage} label={`${optionOnePercentage}%`}/>
                                 <small className="text-muted">{optionOneVotes} out of {totalVotes} votes</small>
-                                <p className='mt-3'>{optionTwo.text}</p>
+
+                                <p className='mt-3'>
+                                    {optionTwo.text} 
+                                    {authedUserOption === 'optionTwo' 
+                                        ? <Badge className='text-danger'>You Voted</Badge> 
+                                        : null}
+                                </p>
                                 <ProgressBar striped variant="info" now={optionTwoPercentage} label={`${optionTwoPercentage}%`}/>
                                 <small className="text-muted">{optionTwoVotes} out of {totalVotes} votes</small>
                             </Col>
