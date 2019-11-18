@@ -166,8 +166,8 @@ export function _saveQuestion (question) {
       users = {
         ...users,
         [authedUser.id]: {
-          ...users[authedUser.id],
-          questions: users[authedUser.id].questions.concat([formattedQuestion.id])
+          ...users[authedUser],
+          questions: users[authedUser].questions.concat([formattedQuestion.id])
         }
       }
 
@@ -181,10 +181,10 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
     setTimeout(() => {
       users = {
         ...users,
-        [authedUser.id.id]: {
-          ...users[authedUser.id.id],
+        [authedUser.id]: {
+          ...users[authedUser.id],
           answers: {
-            ...users[authedUser.id.id].answers,
+            ...users[authedUser.id].answers,
             [qid]: answer
           }
         }
@@ -196,7 +196,7 @@ export function _saveQuestionAnswer ({ authedUser, qid, answer }) {
           ...questions[qid],
           [answer]: {
             ...questions[qid][answer],
-            votes: questions[qid][answer].votes.concat([authedUser])
+            votes: questions[qid][answer].votes.concat([authedUser.id])
           }
         }
       }

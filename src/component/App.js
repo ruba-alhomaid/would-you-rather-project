@@ -20,20 +20,18 @@ class App extends Component {
     render() {
         return(
             <Router>
-                <LoadingBar/>
+                <LoadingBar style={{ backgroundColor: '#e30258'}}/>
                 {this.props.authedUser === null
                     ? <Login/>
-                    : this.props.loading === true
-                        ? null
-                        : <div style={{width:"100%"}}>
-                            <NavBar authedUser={this.props.authedUser.id.name} authedUserAvatar={this.props.authedUser.id.avatarURL}/>
-                            <Route path='/home' component={Home}/>
-                            <Route path='/question/:id' component={Question}/>
-                            <Route path='/new' component={NewQuestion}/>
-                            <Route path='/leaderboard' component={Leaderboard}/>
-                            <Route path='/viewpoll/:id' component={ViewPoll}/>
-                            <Route path='/result/:id' component={Result}/>
-                        </div>
+                    : <div style={{width:"100%"}}>
+                        <NavBar authedUser={this.props.authedUser.name} authedUserAvatar={this.props.authedUser.avatarURL}/>
+                        <Route path='/home' component={Home}/>
+                        <Route path='/question/:id' component={Question}/>
+                        <Route path='/new' component={NewQuestion}/>
+                        <Route path='/leaderboard' component={Leaderboard}/>
+                        <Route path='/viewpoll/:id' component={ViewPoll}/>
+                        <Route path='/result/:id' component={Result}/>
+                    </div>
                 }
             </Router>
         )
@@ -42,8 +40,7 @@ class App extends Component {
 
 let mapStateToProps = ({ authedUser }) => {
     return {
-        authedUser,
-        loading: authedUser === null
+        authedUser
     }
 }
 

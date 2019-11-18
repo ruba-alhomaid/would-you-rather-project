@@ -60,7 +60,7 @@ function mapStateToProps ({authedUser, users, questions}, {qid}) {
     const question = questions.hasOwnProperty(qid)
                         ? questions[qid]
                         : null
-    const answers = authedUser.id.answers
+    const answers = authedUser.answers
 
     return {
         authedUser,

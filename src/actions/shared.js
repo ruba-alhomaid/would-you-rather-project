@@ -21,7 +21,7 @@ export let handleAddQuestion = (optionOne, optionTwo, authedUser) => {
         return saveQuestion({
             optionOneText: optionOne,
             optionTwoText: optionTwo,
-            author: authedUser.id
+            author: authedUser
         })
             .then((question) => {
                 dispatch(userAddQuestion(question))
@@ -40,8 +40,8 @@ export let handleAnswerQuestion = (qid, answer, authedUser) => {
             answer
         })
             .then(() => {
-                dispatch(userAnswerQuestion(authedUser, qid, answer))
                 dispatch(answerQuestion(qid, authedUser, answer))
+                dispatch(userAnswerQuestion(qid, authedUser, answer))
             })
             .then(() => dispatch(hideLoading()))
     }
